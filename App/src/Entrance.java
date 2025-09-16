@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Entrance {
-    public void entrance(HashMap<String, HashMap<String, String>> parkingLevel1){
+    public void entrance(HashMap<String, HashMap<String, String>> parkingLevel, String levelChoose){
         HashMap<String, String> vehicleData = new HashMap<>();
 
         String[] types = {"Motorcycle", "Car", "Truck"};
@@ -17,7 +17,7 @@ public class Entrance {
         }
 
         String type = JOptionPane.showInputDialog(null, "Select the type of your vehicle: ", "Vehicle type", JOptionPane.QUESTION_MESSAGE, null, types, types[0]).toString();
-        String level = "A"+(parkingLevel1.size()+1);
+        String level = levelChoose+(parkingLevel.size()+1);
 
         LocalTime currentTime = LocalTime.now();
         DateTimeFormatter hour = DateTimeFormatter.ofPattern("hh:mm");
@@ -31,10 +31,10 @@ public class Entrance {
         vehicleData.put("EntryHour", formattedTime);
         vehicleData.put("Day", dayString);
 
-        parkingLevel1.put(plate, vehicleData);
+        parkingLevel.put(plate, vehicleData);
 
-        for (String plates:  parkingLevel1.keySet()){
-            System.out.println(parkingLevel1.get(plates));
+        for (String plates:  parkingLevel.keySet()){
+            System.out.println(parkingLevel.get(plates));
         }
 
         /// Type, CheckIn, level
