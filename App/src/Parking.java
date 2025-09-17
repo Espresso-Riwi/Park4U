@@ -1,40 +1,44 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Parking {
 
     private String level;
     private int capacity;
     private int actualCapacity;
+    private Map<String, Vehicle> vehicles;
 
     public Parking() {
 
     }
 
-    public Parking(String level, int capacity, int actualCapacity) {
+    public Parking(String level, int capacity) {
         this.level = level;
         this.capacity = capacity;
-        this.actualCapacity = actualCapacity;
+        this.actualCapacity = 0;
+        this.vehicles = new HashMap<>();
     }
 
-    public String getLevel() {
-        return level;
+    public boolean addVehicle(Vehicle vehicle) {
+        if (actualCapacity < capacity && !vehicles.containsKey(vehicle.getPlate())) {
+            vehicles.put(vehicle.getPlate(), vehicle);
+            actualCapacity++;
+            return true;
+        }
+        return false;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public Vehicle removeVehicle(String plate) {
+        Vehicle removed = vehicles.remove(plate);
+        if (removed != null) actualCapacity--;
+        return removed;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public Vehicle searchByPlate(String plate) {
+        return vehicles.get(plate);
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public int getActualCapacity() {
-        return actualCapacity;
-    }
-
-    public void setActualCapacity(int actualCapacity) {
-        this.actualCapacity = actualCapacity;
+    public Map<String, Vehicle> getVehicles() {
+        return vehicles;
     }
 }

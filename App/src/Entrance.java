@@ -7,20 +7,7 @@ public class Entrance {
 
     public String chooseParking(Parking p1, Parking p2, Parking p3, Parking p4){
         String[] levels = {"Level 1", "Level 2", "Level 3", "Level 4"};
-        String level = JOptionPane.showInputDialog(null, "What level is the vehicle at?", "Level", JOptionPane.QUESTION_MESSAGE, null, levels, levels[0]).toString();
-        
-        switch (level){
-            case "Level 1":
-                p1.setActualCapacity(p1.getActualCapacity() + 1);
-            case "Level 2":
-                p1.setActualCapacity(p1.getActualCapacity() + 1);
-            case "Level 3":
-                p1.setActualCapacity(p1.getActualCapacity() + 1);
-            case "Level 4":
-                p1.setActualCapacity(p1.getActualCapacity() + 1);
-        }
-        
-        return level;
+        return JOptionPane.showInputDialog(null, "What level is the vehicle at?", "Level", JOptionPane.QUESTION_MESSAGE, null, levels, levels[0]).toString();
     }
 
     public void entrance(String level, Parking p, ArrayList<Vehicle> list){
@@ -46,8 +33,9 @@ public class Entrance {
         v.setDayName(dayName);
         v.setLevel(level);
 
+        p.addVehicle(v);
         list.add(v);
-        /// Type, CheckIn, level
+
     }
 }
 

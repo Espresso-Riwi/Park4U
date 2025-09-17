@@ -17,18 +17,6 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(String type, String ticket, String plate, LocalTime checkOut, LocalTime checkIn, String dayName ,String membership, String agreement, String level, Duration duration) {
-        this.type = type;
-        this.ticket = ticket;
-        this.plate = plate;
-        this.checkOut = checkOut;
-        this.checkIn = checkIn;
-        this.dayName = dayName;
-        this.membership = membership;
-        this.agreement = agreement;
-        this.level = level;
-        this.duration = duration;
-    }
 
     public String getPlate() {
         return plate;
