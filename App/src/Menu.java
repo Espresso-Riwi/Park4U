@@ -1,16 +1,15 @@
 import javax.swing.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Menu {
     static String level = "";
     public void menu(){
+        Parking p1 = new Parking("Level 1", 30, 0);
+        Parking p2 = new Parking("Level 2", 30, 0);
+        Parking p3 = new Parking("Level 3", 30, 0);
+        Parking p4 = new Parking("Level 4", 30, 0);
 
-        HashMap<String, HashMap<String, String>> parkingLevel1 = new HashMap<>();
-        HashMap<String, HashMap<String, String>> parkingLevel2 = new HashMap<>();
-        HashMap<String, HashMap<String, String>> parkingLevel3 = new HashMap<>();
-        HashMap<String, HashMap<String, String>> parkingLevel4 = new HashMap<>();
-
-
+        ArrayList<Vehicle> todayVehiclesList = new ArrayList<>();
 
         Entrance e = new Entrance();
         String[] options = {"Entrance", "Membership", "Agreement", "Out","Exit"};
@@ -20,7 +19,8 @@ public class Menu {
             String option = JOptionPane.showInputDialog(null, "Welcome to Park4U\nChoose the option that you want: ", "Menu", JOptionPane.QUESTION_MESSAGE, null, options, options[0]).toString();
             switch (option){
                 case "Entrance":
-                    e.entrance(chooseLevel(parkingLevel1, parkingLevel2, parkingLevel3, parkingLevel4), level);
+                    String level = e.chooseParking(p1, p2, p3, p4);
+                    e.entrance(level, knowLevel(level, p1, p2, p3, p4), todayVehiclesList);
                     break;
                 case "Membership":
                     break;
@@ -33,36 +33,14 @@ public class Menu {
                     break;
             }
         }
-
-
-
-
     }
 
-    static public HashMap<String, HashMap<String, String>> chooseLevel(HashMap<String, HashMap<String, String>> parkingLevel1,
-                                                                HashMap<String, HashMap<String, String>> parkingLevel2,
-                                                                HashMap<String, HashMap<String, String>> parkingLevel3,
-                                                                HashMap<String, HashMap<String, String>> parkingLevel4){
-        String[] options = {"Level 1", "Level 2", "Level 3", "Level 4"};
-        String option = JOptionPane.showInputDialog(null, "Choose the level that you want to park the vehicle: ", "Parking level", JOptionPane.QUESTION_MESSAGE, null, options, options[0]).toString();
-
-        switch (option) {
-            case "Level 2" -> {
-                level = "B";
-                return parkingLevel2;
-            }
-            case "Level 3" -> {
-                level = "C";
-                return parkingLevel3;
-            }
-            case "Level 4" -> {
-                level = "D";
-                return parkingLevel4;
-            }
-            default -> {
-                level = "A";
-                return parkingLevel1;
-            }
-        }
+    public Parking knowLevel(String level, Parking p1, Parking p2, Parking p3, Parking p4){
+        return switch (level) {
+            case "Level 2" -> p2;
+            case "Level 3" -> p3;
+            case "Level 4" -> p4;
+            default -> p1;
+        };
     }
 }
