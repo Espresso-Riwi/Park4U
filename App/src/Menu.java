@@ -12,6 +12,7 @@ public class Menu {
         ArrayList<Vehicle> todayVehiclesList = new ArrayList<>();
 
         Entrance e = new Entrance();
+
         String[] options = {"Entrance", "Membership", "Agreement", "Out","Exit"};
         boolean flag = true;
 
@@ -23,6 +24,7 @@ public class Menu {
                     e.entrance(level, knowLevel(level, p1, p2, p3, p4), todayVehiclesList);
                     break;
                 case "Membership":
+                    Membership.membershipsMenu(todayVehiclesList);
                     break;
                 case "Agreement":
                     break;
