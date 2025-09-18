@@ -10,6 +10,7 @@ public class Menu {
         Parking p4 = new Parking("Level 4", 30);
 
         ArrayList<Vehicle> todayVehiclesList = new ArrayList<>();
+        ArrayList<Cashier> payList = new ArrayList<>();
 
         Entrance e = new Entrance();
         Exit ex = new Exit();
@@ -31,7 +32,7 @@ public class Menu {
                     break;
                 case "Out":
                     level = e.chooseParking(p1, p2, p3, p4);
-                    ex.exit(knowLevel(level, p1, p2, p3, p4));
+                    ex.exit(knowLevel(level, p1, p2, p3, p4), payList);
                     break;
                 case "Exit":
                     flag = false;
