@@ -13,6 +13,7 @@ public class Vehicle {
     private String membership;
     private String agreement;
     private String level;
+    private double revenue;
 
     public Vehicle() {
     }
@@ -96,5 +97,15 @@ public class Vehicle {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    // Getter
+    public double getRevenue() {
+        return revenue;
+    }
+
+    // Setter
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
     }
 }

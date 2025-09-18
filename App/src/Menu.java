@@ -15,7 +15,7 @@ public class Menu {
         Entrance e = new Entrance();
         Exit ex = new Exit();
 
-        String[] options = {"Entrance", "Membership", "Agreement", "Out","Exit"};
+        String[] options = {"Entrance", "Membership", "Agreement", "Out", "Reports","Exit"};
         boolean flag = true;
 
         while(flag){
@@ -33,6 +33,9 @@ public class Menu {
                 case "Out":
                     level = e.chooseParking(p1, p2, p3, p4);
                     ex.exit(knowLevel(level, p1, p2, p3, p4), payList);
+                    break;
+                case "Reports":
+                    Reports.reportsMenu(p1, p2, p3, p4, todayVehiclesList);
                     break;
                 case "Exit":
                     flag = false;

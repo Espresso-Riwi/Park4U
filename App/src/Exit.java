@@ -75,12 +75,13 @@ public class Exit {
         String response = JOptionPane.showInputDialog(null, "Did the person hand over the ticket?", "Ticket", JOptionPane.QUESTION_MESSAGE, null, ticket, ticket[0]).toString();
         if (response.equals(ticket[1])){
             if (hours > 2){
-                payment+=fine;
                 c.setFine(fine);
-            }else{
                 payment+=fine;
-                payment += vehicle * 2;
+
+            }else{
+                payment = fine + (vehicle * 2);
                 c.setFine(fine+(vehicle * 2));
+                c.setBasePrice(vehicle * 2);
             }
         }
         c.setTotalPrice(payment);
