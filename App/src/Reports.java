@@ -1,10 +1,8 @@
 package App.src;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.time.Duration;
+import javax.swing.*;
 
 public class Reports {
 
@@ -97,11 +95,6 @@ public class Reports {
 
     // This report shows the top 3 vehicles that generated the most revenue.
     public static void showTopEarners(ArrayList<Vehicle> vehicles) {
-
-        // IMPORTANT: The 'Vehicle' class needs a 'revenue' field for this to work.
-        // You'll need to add 'private double revenue;' and a 'setRevenue' method to
-        // 'Vehicle.java'.
-        // And update 'Exit.java' to call 'setRevenue' after calculating the payment.
 
         // We sort the list of vehicles by their revenue, from highest to lowest.
         vehicles.sort(Comparator.comparing(Vehicle::getRevenue).reversed());
