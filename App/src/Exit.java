@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 
 public class Exit {
-
     static double night = 0.15f;
     static double motorcycle = 2500;
     static double car = 4000;
