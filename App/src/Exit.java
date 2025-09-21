@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.time.LocalTime;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Exit {
     static double night = 0.15f;
@@ -11,6 +12,8 @@ public class Exit {
     static int minutesLimit = 15;
     static double weekend = 0.10f;
     static double fine = 20000;
+    private static HashMap<String, String> agreeement = new HashMap<>();
+
 
     public void exit(Parking p, ArrayList<Cashier> payList){
         /// Type, CheckIn, dayName, Level
@@ -83,7 +86,51 @@ public class Exit {
                 c.setFine(fine+(vehicle * 2));
                 c.setBasePrice(vehicle * 2);
             }
+
+            
         }
+        
+            
+        int convenio = JOptionPane.showConfirmDialog(null,
+                "Does the vehicle have an agreement?", "Agreement",
+                JOptionPane.YES_NO_OPTION);
+
+        double discountPercent = 0.0;
+        String convenioAplicado = null;
+
+        if (convenio == JOptionPane.YES_OPTION) {
+            String[] opciones = {"COMPANY (12%)", "RESIDENT (10%)", "ECOVEHICLE (8%)"};
+            String opcion = (String) JOptionPane.showInputDialog(null,
+                    "Choose the agreement:",
+                    "agreement type",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]);
+
+            if (opcion != null) {
+                if (opcion.contains("COMPANY")) {
+                    discountPercent = 0.12;
+                    convenioAplicado = "COMPANY";
+                } else if (opcion.contains("RESIDENT")) {
+                    discountPercent = 0.10;
+                    convenioAplicado = "RESIDENT";
+                } else if (opcion.contains("ECOVEHICLE")) {
+                    discountPercent = 0.08;
+                    convenioAplicado = "ECOVEHICLE";
+                }
+                // Guardar en HashMap
+                agreeement.put(vehicleOut.getPlate(), convenioAplicado);
+            }
+        }
+
+        
+        if (discountPercent > 0) {
+            double discount = payment * discountPercent;
+            payment -= discount;
+            c.setDiscount(discountPercent); 
+        }
+
         c.setTotalPrice(payment);
         c.setPlate(vehicleOut.getPlate());
 
