@@ -8,7 +8,7 @@ public class Exit {
     static double night = 0.15f;
     static double motorcycle = 2500;
     static double car = 4000;
-    static double suv = 4500;
+    static double suv = 5500;
     static int minutesLimit = 15;
     static double weekend = 0.10f;
     static double fine = 20000;
@@ -35,7 +35,45 @@ public class Exit {
             int minutes = 14;
 
             if (vehicleOut.getMembership() != null){
-                JOptionPane.showMessageDialog(null, "That plate has a membership "+vehicleOut.getMembership(), "Membership", JOptionPane.INFORMATION_MESSAGE);
+                // Charge monthly membership fee
+                String membershipType = vehicleOut.getMembership();
+                double membershipPrice = 0;
+                
+                switch (membershipType.toUpperCase()) {
+                    case "BASICO":
+                        membershipPrice = 80000;
+                        break;
+                    case "PLUS":
+                        membershipPrice = 120000;
+                        break;
+                    case "PREMIUM":
+                        membershipPrice = 180000;
+                        break;
+                }
+                
+                // Create cashier for membership
+                Cashier membershipCashier = new Cashier();
+                membershipCashier.setPlate(vehicleOut.getPlate());
+                membershipCashier.setBasePrice(membershipPrice);
+                membershipCashier.setTotalPrice(membershipPrice);
+                
+                // Update vehicle revenue
+                vehicleOut.setRevenue(membershipPrice);
+                
+                // Register membership payment in cash register
+                Cashier.registerPayment("MEMBERSHIP", membershipPrice, 0, 0, 0, true);
+                
+                payList.add(membershipCashier);
+                
+                JOptionPane.showMessageDialog(null, 
+                    "=== MEMBERSHIP RECEIPT ===\n" +
+                    "License Plate: " + vehicleOut.getPlate() + "\n" +
+                    "Plan: " + membershipType + "\n" +
+                    "Monthly Price: $" + String.format("%.2f", membershipPrice) + "\n" +
+                    "Total to Pay: $" + String.format("%.2f", membershipPrice),
+                    "Membership Payment", JOptionPane.INFORMATION_MESSAGE);
+                
+                p.removeVehicle(plate);
             }else{
                 String type = vehicleOut.getType();
                 payment(hours, minutes, checkOut, vehicleOut, type, payList);
@@ -119,7 +157,7 @@ public class Exit {
                     discountPercent = 0.08;
                     convenioAplicado = "ECOVEHICLE";
                 }
-                // Guardar en HashMap
+                // Save in HashMap
                 agreeement.put(vehicleOut.getPlate(), convenioAplicado);
             }
         }
@@ -133,6 +171,16 @@ public class Exit {
 
         c.setTotalPrice(payment);
         c.setPlate(vehicleOut.getPlate());
+
+        // Update vehicle revenue
+        vehicleOut.setRevenue(payment);
+        
+        // Register payment in cash register
+        Cashier.registerPayment(vehicleOut.getType(), payment, 
+                             discountPercent > 0 ? payment * discountPercent / (1 - discountPercent) : 0, 
+                             c.getSurcharge() * c.getBasePrice(), 
+                             c.getFine(), 
+                             false);
 
         payList.add(c);
         JOptionPane.showMessageDialog(null, "Licence plate: "+c.getPlate()+"\nBase price: "+c.getBasePrice()+
